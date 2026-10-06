@@ -33,10 +33,25 @@ install_geforcenow() {
   echo
 }
 
+install_webi() {
+  curl -sS https://webi.sh/webi | sh
+  source "$HOME/.config/envman/PATH.env"
+  if [[ -f "$webi" ]]; then
+    warning "Installing packages"
+    grep -v -e '#' -e '^$' "$webi" | xargs -r webi "$webi" || {
+      error "Error while installing packages"
+      return 1
+    }
+    message "Package installation complete"
+    echo
+  fi
+}
+
 # Execution
 dir="$(dirname "$0")/config"
 cfg="$dir/config.cfg"
 apps="$dir/flatpaks.cfg"
+webi="$dir/webi.cfg"
 if [[ ! -f "$cfg" ]]; then
   error "File $cfg not found"
   exit 1

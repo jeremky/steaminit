@@ -35,6 +35,7 @@ install_geforcenow() {
 
 install_webi() {
   curl -sS https://webi.sh/webi | sh
+  #shellcheck disable=SC1091
   source "$HOME/.config/envman/PATH.env"
   if [[ -f "$webi" ]]; then
     warning "Installing packages"

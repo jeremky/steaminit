@@ -18,6 +18,8 @@ preferences. Comment out the functions you don't want to use. Example:
 
 install_flatpaks
 install_geforcenow
+
+configure_sshd
 ```
 
 ## Usage

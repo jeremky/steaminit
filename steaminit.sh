@@ -18,21 +18,6 @@ install_flatpaks() {
   fi
 }
 
-install_geforcenow() {
-  warning "Installing GeForce NOW"
-  flatpak remote-add --user --if-not-exists GeForceNOW https://international.download.nvidia.com/GFNLinux/flatpak/geforcenow.flatpakrepo
-  flatpak install -y --user flathub org.freedesktop.Platform/x86_64/24.08 || {
-    error "Error while installing the Freedesktop platform"
-    return 1
-  }
-  flatpak install -y --user GeForceNOW com.nvidia.geforcenow || {
-    error "Error while installing GeForce NOW"
-    return 1
-  }
-  message "GeForce NOW installation complete"
-  echo
-}
-
 configure_sshd() {
   if [[ ! -d /etc/ssh/sshd_config.d ]]; then
     error "SSH is not installed"

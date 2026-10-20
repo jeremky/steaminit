@@ -5,8 +5,10 @@ SteamOS post-installation script.
 ## Features
 
 - `install_flatpaks`: installs the applications listed in `config/flatpaks.cfg`
-- `install_geforcenow`: adds the NVIDIA repository and installs GeForce NOW via
-  Flathub
+- `configure_sshd`: hardens access to the OpenSSH server
+
+> [!IMPORTANT]
+> `configure_sshd` writes its config to `/etc/ssh/sshd_config.d/<user>.conf`
 
 ## Configuration
 
@@ -17,8 +19,6 @@ preferences. Comment out the functions you don't want to use. Example:
 # steaminit config
 
 install_flatpaks
-install_geforcenow
-
 configure_sshd
 ```
 

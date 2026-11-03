@@ -6,6 +6,20 @@ message() { echo -e "\033[0;36m──────────\033[0m\n\033[0;32m
 warning() { echo -e "\033[0;33m❯ $*\033[0m\n\033[0;36m──────────\033[0m"; }
 
 # Functions
+init_passwd() {
+  if [[ $USER != "deck" ]]; then
+    error "Current user is not deck"
+    return
+  fi
+  warning "Changing password for $USER"
+  passwd || {
+    error "Error while changing password"
+    exit 1
+  }
+  message "Password changed"
+  echo
+}
+
 install_flatpaks() {
   if [[ -f "$apps" ]]; then
     warning "Installing flatpaks"
@@ -16,6 +30,25 @@ install_flatpaks() {
     message "Flatpak installation complete"
     echo
   fi
+}
+
+install_decky() {
+  if [[ -d "$HOME/homebrew" ]]; then
+    error "Decky Loader is already installed"
+    return
+  fi
+  warning "Installing Decky Loader"
+  local script
+  script=$(curl -fsSL https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/install_release.sh) || {
+    error "Error while downloading Decky Loader installer"
+    return 1
+  }
+  sh -c "$script" || {
+    error "Error while installing Decky Loader"
+    return 1
+  }
+  message "Decky Loader installed"
+  echo
 }
 
 configure_sshd() {
@@ -66,7 +99,7 @@ if [[ -n "$1" ]]; then
   fi
 fi
 
-while read -r line; do
+while read -r line <&3; do
   [[ -z "$line" || "$line" == \#* ]] && continue
   if declare -f "$line" >/dev/null; then
     "$line"
@@ -74,4 +107,4 @@ while read -r line; do
     error "No function matches parameter $line"
     exit 1
   fi
-done <"$cfg"
+done 3<"$cfg"

@@ -4,11 +4,13 @@ SteamOS post-installation script.
 
 ## Features
 
+- `init_passwd`: asks for change deck user password
 - `install_flatpaks`: installs the applications listed in `config/flatpaks.cfg`
+- `install_decky`: installs [Decky Loader](https://decky.xyz/)
 - `configure_sshd`: hardens access to the OpenSSH server
 
 > [!IMPORTANT]
-> `configure_sshd` writes its config to `/etc/ssh/sshd_config.d/<user>.conf`
+> `configure_sshd` writes its config to `/etc/ssh/sshd_config.d/deck.conf`
 
 ## Configuration
 
@@ -18,7 +20,9 @@ preferences. Comment out the functions you don't want to use. Example:
 ```txt
 # steaminit config
 
+init_passwd
 install_flatpaks
+install_decky
 configure_sshd
 ```
 

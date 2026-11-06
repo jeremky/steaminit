@@ -23,7 +23,7 @@ init_passwd() {
 install_flatpaks() {
   if [[ -f "$apps" ]]; then
     warning "Installing flatpaks"
-    grep -v -e '#' -e '^$' "$apps" | xargs -r flatpak install -y --user flathub || {
+    grep -v -e '#' -e '^$' "$apps" | xargs -r -o flatpak install -y flathub || {
       error "Error while installing flatpaks"
       return 1
     }
@@ -43,7 +43,7 @@ install_decky() {
     error "Error while downloading Decky Loader installer"
     return 1
   }
-  sh -c "$script" || {
+  sudo sh -c "$script" || {
     error "Error while installing Decky Loader"
     return 1
   }
